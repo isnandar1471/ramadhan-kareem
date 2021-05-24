@@ -25,7 +25,7 @@
 	<!-- AXIOS -->
 	<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 
-	<link type="text/css" rel="stylesheet" href="main/main.css" />
+	<link type="text/css" rel="stylesheet" href="<?=URL::asset('assets/css/main/main.css');?>" />
 
 	<!-- GOOGLE FONT -->
 	<link rel="preconnect" href="https://fonts.gstatic.com">
@@ -125,8 +125,8 @@
 	</b-container>
 
 	<script src="https://code.jquery.com/jquery-3.6.0.min.js" crossorigin="anonymous"></script>
-	<script src="main-jquery.js"></script>
-	<script src="main-vue.js"></script>
+	<script src="<?=URL::asset('assets/js/main/main-jquery.js')?>"></script>
+	<script src="<?=URL::asset('assets/js/main/main-vue.js')?>"></script>
 
 </body>
 
