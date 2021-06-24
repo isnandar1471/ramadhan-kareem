@@ -17,7 +17,7 @@ use Illuminate\Support\Facades\Route;
 // 	return view('welcome');
 // });
 
-Route::get('', function(){
+Route::get('', function () {
 	return view('main/main');
 });
 
@@ -31,7 +31,7 @@ Route::get('', function(){
 // 	return view('main/main-jquery.js');
 // });
 
-Route::get('login', function(){
+Route::get('login', function () {
 	return view('login/login');
 });
 // Route::get('login.css', function(){
@@ -44,9 +44,19 @@ Route::get('login', function(){
 // 	return view('login/login-jquery.js');
 // });
 
-Route::get('admin', function(){
+
+
+
+
+// Route::group(["middleware" => "auth:sanctum"], function () {
+Route::get('admin', function () {
 	return view('admin/admin');
 });
+// });
+
+
+
+
 // Route::get('admin.css', function(){
 // 	return view('admin/admin.css');
 // });
@@ -56,5 +66,3 @@ Route::get('admin', function(){
 // Route::get('admin-jquery.js', function(){
 // 	return view('admin/admin-jquery.js');
 // });
-
-

@@ -1,6 +1,12 @@
 <?php
 
+use App\Http\Controllers\AuthController;
+use App\Http\Controllers\ArtikelController;
+use App\Http\Controllers\KegiatanController;
+use App\Http\Controllers\KulinerController;
+use App\Models\Auth;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -14,65 +20,81 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware('auth:api')->get('/user', function (Request $request) {
-    return $request->user();
+// Route::middleware('auth:api')->get('/user', function (Request $request) {
+// 	return $request->user();
+// });
+// Route::group(["middleware" => "auth:sanctum"], function () {
+// 	Route::get('admin', function () {
+// 		// return view('admin/admin');
+// 		return response()->json([
+// 			"message" => "berhasil ke halaman admin"
+// 		]);
+// 	});
+// });
+
+
+
+Route::post("cek_page", function (Request $request) {
+	// $token = $request->token;
+
+	$cek = DB::table("personal_access_tokens")->where("token", $request->old_token)->first();
+
+	// $user = Auth::all();
+	// $user = DB::table("personal_access_tokens")->get();
+	// foreach ($user->tokens as $token) {
+	// dump($cek);
+	if (!$cek) {
+		return response()->json([
+			"message" => "not ok"
+		]);
+	};
+	// };
+
+	return response()->json([
+		"message" => "ok"
+	]);
 });
 
-
-
-
 /* --------------------------------------------------------------- */
-
-// $nsc = name space controller
-$nsc = 'App\Http\Controllers\\';
-
-/* --------------------------------------------------------------- */
-
-// $c = controller
-$c = 'AuthController@';
 
 // get all
-Route::get		('auth'			, $nsc . $c . 'index');
+Route::post('auth/login', [AuthController::class, 'login'])->name('login');;
+// get all
+Route::get('auth', [AuthController::class, 'index']);
 // get 1
-Route::get		('auth/{auth}'	, $nsc . $c . 'show');
+Route::get('auth/{auth}', [AuthController::class, 'show']);
 // store 1
-Route::post		('auth'			, $nsc . $c . 'store');
+Route::post('auth', [AuthController::class, 'store']);
 // update 1
-Route::patch	('auth/{auth}'	, $nsc . $c . 'update');
+Route::patch('auth/{auth}', [AuthController::class, 'update']);
 // delete 1
-Route::delete	('auth/{auth}'	, $nsc . $c . 'destroy');
+Route::delete('auth/{auth}', [AuthController::class, 'destroy']);
 
 /* --------------------------------------------------------------- */
 
-// override
-$c = 'ArtikelController@';
-
 // get all
-Route::get		('artikel'			, $nsc.$c. 'index');
+Route::get('artikel', [ArtikelController::class, 'index']);
 // get 1
-Route::get		('artikel/{artikel}', $nsc.$c. 'show');
+Route::get('artikel/{artikel}', [ArtikelController::class, 'show']);
 // store 1
-Route::post		('artikel'			, $nsc.$c. 'store');
+Route::post('artikel', [ArtikelController::class, 'store']);
 // update 1
-Route::patch	('artikel/{artikel}', $nsc.$c. 'update');
+Route::patch('artikel/{artikel}', [ArtikelController::class, 'update']);
 // delete 1
-Route::delete	('artikel/{artikel}', $nsc.$c. 'destroy');
+Route::delete('artikel/{artikel}', [ArtikelController::class, 'destroy']);
 
 /* ---------------------------------------------------------------- */
 
-// override
-$c = 'KulinerController@';
-
 // get all
-Route::get		('kuliner'				, $nsc.$c. 'index');
+Route::get('kuliner', [KulinerController::class, 'index']);
 // get 1
-Route::get		('kuliner/{kuliner}'	, $nsc.$c. 'show');
+Route::get('kuliner/{kuliner}', [KulinerController::class, 'show']);
 // store 1
-Route::post		('kuliner'				, $nsc.$c. 'store');
+Route::post('kuliner', [KulinerController::class, 'store']);
 // update 1
-Route::patch	('kuliner/{kuliner}'	, $nsc.$c. 'update');
+Route::patch('kuliner/{kuliner}', [KulinerController::class, 'update']);
 // delete 1
-Route::delete	('kuliner/{kuliner}'	, $nsc.$c. 'destroy');
+Route::delete('kuliner/{kuliner}', [KulinerController::class, 'destroy']);
 
 /* --------------------------------------------------------------- */
 
@@ -80,21 +102,21 @@ Route::delete	('kuliner/{kuliner}'	, $nsc.$c. 'destroy');
 $c = 'KegiatanController@';
 
 // get all
-Route::get		('kegiatan'				, $nsc.$c. 'index');
+Route::get('kegiatan', [KegiatanController::class, 'index']);
 // get 1
-Route::get		('kegiatan/{kegiatan}'	, $nsc.$c. 'show');
+Route::get('kegiatan/{kegiatan}', [KegiatanController::class, 'show']);
 // store 1
-Route::post		('kegiatan'				, $nsc.$c. 'store');
+Route::post('kegiatan', [KegiatanController::class, 'store']);
 // update 1
-Route::patch	('kegiatan/{kegiatan}'	, $nsc.$c. 'update');
+Route::patch('kegiatan/{kegiatan}', [KegiatanController::class, 'update']);
 // delete 1
-Route::delete	('kegiatan/{kegiatan}'	, $nsc.$c. 'destroy');
+Route::delete('kegiatan/{kegiatan}', [KegiatanController::class, 'destroy']);
 
 
 
 
 
-Route::get('', function ()	{
+Route::get('', function () {
 	$resp = [
 		[
 			'tabel' => 'auth',
@@ -257,5 +279,5 @@ Route::get('', function ()	{
 			]
 		]
 	];
-	return response()->json( $resp );
+	return response()->json($resp);
 });

@@ -11,14 +11,20 @@ window.app = new Vue({
 	methods: {
 		onSubmit(event) {
 			event.preventDefault()
-			axios.post('http://localhost:5000/login_auth', {
+			// axios.post('http://127.0.0.1:8000/api/auth/login', {
+			axios.post('/api/auth/login', {
 				username: this.form.username,
 				password: this.form.password
 			}).then(function (response) {
 				localStorage.setItem("token_app", response.data.token);
 				localStorage.setItem("username", response.data.username);
-				window.location.href = 'http://localhost:5000/admin';
-			}).catch(this.showAlert = true);
+				// window.location = 'http://127.0.0.1:8000/admin';
+				window.location = '/admin';
+			}).catch((error) => {
+				this.showAlert = false;
+				console.log(error);
+			}
+			);
 		},
 		onReset(event) {
 			// event.preventDefault()
@@ -28,6 +34,6 @@ window.app = new Vue({
 		}
 	},
 	mounted() {
-		
+
 	}
 })
